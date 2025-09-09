@@ -1,26 +1,46 @@
 @import "tailwindcss";
 
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
+@theme {
+  --color-amn-primary: #1e40af;
+  --color-amn-secondary: #f59e0b;
+  --color-amn-dark: #0b1220;
+  --shadow-amn-lg: 0 20px 45px -12px rgba(2,6,23,.25);
+  --font-sans: var(--font-amnyar), Tahoma, ui-sans-serif, system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial;
 }
 
-@theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+html { scroll-behavior: smooth; }
+body { @apply bg-white text-slate-800 antialiased font-sans; }
+
+@layer components {
+  .amn-btn { @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-semibold transition; }
+  .amn-btn-primary { @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-semibold transition bg-amn-primary text-white hover:opacity-90; }
+  .amn-btn-outline { @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-semibold transition border border-slate-200 text-slate-700 hover:bg-slate-50; }
+  .amn-chip { @apply inline-flex items-center rounded-full bg-amber-100 px-3 py-1 text-amber-800 text-xs font-bold; }
+
+  .amn-topbar { @apply bg-amn-dark; }
+  .amn-header { @apply sticky top-0 z-50 backdrop-blur; }
+  .amn-bar { @apply h-20 flex items-center justify-between; }
+  .amn-nav { @apply hidden lg:flex items-center gap-6; }
+  .nav-link { @apply inline-flex items-center gap-1 px-3 py-2 font-semibold text-slate-700 hover:text-amn-primary transition; }
+  .menu-item { @apply relative; }
+  .submenu { @apply absolute top-full mt-2 min-w-48 bg-white rounded-xl shadow-lg border border-slate-100 py-2 invisible opacity-0 translate-y-2 transition; }
+  .menu-item:hover > .submenu, .menu-item:focus-within > .submenu { @apply visible opacity-100 translate-y-0; }
+  .submenu a { @apply block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50; }
+
+  .mobile-backdrop { @apply fixed inset-0 bg-black/40 opacity-0 invisible transition; }
+  .mobile-backdrop.open { @apply visible opacity-100; }
+  .mobile-panel { @apply fixed top-0 bottom-0 right-0 w-80 bg-white shadow-2xl translate-x-full transition p-6 overflow-y-auto z-50; }
+  .mobile-panel.open { @apply translate-x-0; }
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
-}
+@utility container { margin-inline: auto; width: 100%; padding-inline: 1rem; }
+@media (min-width: 1024px) { .container { padding-inline: 2rem; } }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
-}
+.hero-swiper .swiper-slide { opacity: 0; visibility: hidden; }
+.hero-swiper .swiper-slide.swiper-slide-active { opacity: 1; visibility: visible; }
+.hero-swiper .swiper-pagination { position: static; margin-top: 1.25rem; }
+.hero-swiper .swiper-pagination-bullet { width: 8px; height: 8px; background: #94a3b8; opacity: .6; }
+.hero-swiper .swiper-pagination-bullet-active { background: var(--color-amn-primary); transform: scale(1.2); opacity: 1; }
+
+.brand-swiper .swiper-slide { height: 72px; display: flex; align-items: center; justify-content: center; }
+.cursor-trail { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; display: block; }

@@ -84,21 +84,21 @@ body { @apply bg-white text-slate-800 antialiased font-sans; }
 @media (min-width: 1024px){ .brand-swiper .swiper-slide { height: 114px; } }
 
 
-.brand-strip{background:#fff}
-.brand-marquee{overflow:hidden}
-.brand-track{display:flex;gap:0;width:max-content;animation:brand-move 35s linear infinite}
-.brand-track:hover{animation-play-state:paused}
-.brand-cell{width:16rem;height:114px;display:flex;align-items:center;justify-content:center;border-inline-end:1px dashed #e5e7eb;border-bottom:1px dashed #e5e7eb}
-@keyframes brand-move{to{transform:translateX(-50%)}}
+.brand-strip { background:#fff }
+.brand-marquee { overflow:hidden }
+.brand-track { display:flex; gap:0; width:max-content; animation:brand-move 35s linear infinite; will-change:transform; direction:ltr }
+.brand-track:hover { animation-play-state:paused }
+.brand-cell { width:16rem; height:114px; display:flex; align-items:center; justify-content:center }
+@keyframes brand-move { to { transform: translateX(-33.333333%) } }
 
 
-.ticker { position: relative; overflow: hidden; padding-block: .65rem; }
-.ticker__track { display: flex; gap: 2.5rem; white-space: nowrap; width: max-content; animation: ticker-x 36s linear infinite; }
-.ticker:hover .ticker__track { animation-play-state: paused; }
-.ticker__fade { position: absolute; top: 0; bottom: 0; width: 72px; pointer-events: none; }
-.ticker__fade--l { right: 0; background: linear-gradient(to left, #fff, transparent); }
-.ticker__fade--r { left: 0; background: linear-gradient(to right, #fff, transparent); }
-@keyframes ticker-x { to { transform: translateX(-50%); } }
+.ticker { position: relative; overflow: hidden; padding-block: .65rem }
+.ticker__track { display: flex; gap: 2.5rem; white-space: nowrap; align-items: center; width: max-content; animation: ticker-x 36s linear infinite; will-change: transform; direction: ltr }
+.ticker:hover .ticker__track { animation-play-state: paused }
+.ticker__fade { position: absolute; top: 0; bottom: 0; width: 72px; pointer-events: none }
+.ticker__fade--l { right: 0; background: linear-gradient(to left, #fff, transparent) }
+.ticker__fade--r { left: 0; background: linear-gradient(to right, #fff, transparent) }
+@keyframes ticker-x { to { transform: translateX(-33.333333%) } }
 
 
 .scrolltop { position: fixed; left: 1rem; bottom: 1rem; width: 48px; height: 48px; border-radius: 9999px; background: #fff; box-shadow: 0 10px 25px -8px rgba(2,6,23,.2); display: grid; place-items: center; opacity: 0; visibility: hidden; transition: .25s; }
@@ -107,3 +107,10 @@ body { @apply bg-white text-slate-800 antialiased font-sans; }
 
 
 .cursor-trail { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; display: block; }
+
+
+.amn-btn { position: relative; overflow: hidden; transition: transform .2s, box-shadow .2s }
+.amn-btn::after { content:""; position:absolute; inset:0; transform: translateX(-100%); background: linear-gradient(90deg, rgba(255,255,255,.18), rgba(255,255,255,0)); transition: transform .25s }
+.amn-btn:hover::after { transform: translateX(0) }
+.amn-btn:active { transform: translateY(1px) }
+

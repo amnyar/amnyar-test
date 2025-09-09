@@ -33,7 +33,7 @@ export default function CursorTrail(){
         p.a-=0.012
         if(p.a<=0){ parts.splice(i,1); continue }
         ctx.globalAlpha=p.a
-        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle='#1e40af'; ctx.fill()
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle='#1e40af54'; ctx.fill()
       }
       ctx.globalAlpha=1
       anim=requestAnimationFrame(step)

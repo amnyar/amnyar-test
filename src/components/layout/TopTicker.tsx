@@ -10,12 +10,12 @@ const items = [
 ]
 
 export default function TopTicker() {
-  const tape = items.concat(items)
+  const tape = items.concat(items).concat(items)
   return (
     <div className="bg-white border-t border-neutral-100">
       <div className="container px-0">
         <div className="ticker">
-          <div className="ticker__track">
+          <div className="ticker__track" dir="ltr">
             {tape.map((it, i) => (
               <div key={i} className="flex items-center gap-3 text-slate-700 text-[15px]">
                 <SmartImage src={it.i} alt="" width={18} height={18} />

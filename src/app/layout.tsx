@@ -1,5 +1,5 @@
 import './globals.css'
-import type { Metadata } from 'next'
+import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import Script from 'next/script'
 import Header from '@/components/layout/Header'
@@ -33,7 +33,6 @@ export const metadata: Metadata = {
   },
   robots: { index: true, follow: true },
   icons: { icon: '/favicon.ico' },
-  themeColor: '#0b1220',
 }
 
 export const viewport: Viewport = { themeColor: '#0b1220' }
@@ -49,17 +48,41 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fa" dir="rtl" className={amnyarFont.variable}>
       <body className="font-sans">
+        <CursorTrail />
         <Header />
         {children}
         <Footer />
+
         <Script id="ld-org" type="application/ld+json" strategy="afterInteractive">{JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'Organization',
           name: 'امن‌یار',
           url: 'https://www.amnyar.com',
           logo: 'https://www.amnyar.com/assets/images/logo/logo.png',
-          sameAs: ['https://www.instagram.com','https://www.linkedin.com','https://twitter.com'],
-          contactPoint: [{ '@type': 'ContactPoint', telephone: '+983134617093', contactType: 'customer support', areaServed: 'IR', availableLanguage: ['fa','en'] }]
+          sameAs: [
+            'https://www.instagram.com/amnyar',
+            'https://www.linkedin.com/company/amnyar',
+            'https://twitter.com/amnyar'
+          ],
+          contactPoint: [{
+            '@type': 'ContactPoint',
+            telephone: '+983134617093',
+            contactType: 'customer support',
+            areaServed: 'IR',
+            availableLanguage: ['fa']
+          }]
+        })}</Script>
+
+        <Script id="ld-website" type="application/ld+json" strategy="afterInteractive">{JSON.stringify({
+          '@context': 'https://schema.org',
+          '@type': 'WebSite',
+          name: 'امن‌یار',
+          url: 'https://www.amnyar.com',
+          potentialAction: {
+            '@type': 'SearchAction',
+            target: 'https://www.amnyar.com/search?q={search_term_string}',
+            'query-input': 'required name=search_term_string'
+          }
         })}</Script>
       </body>
     </html>

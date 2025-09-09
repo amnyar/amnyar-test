@@ -10,6 +10,7 @@
 
 html { scroll-behavior: smooth; }
 body { @apply bg-white text-slate-800 antialiased font-sans; }
+::selection { background: color-mix(in oklab, var(--color-amn-primary) 18%, white); color: var(--color-amn-dark); }
 
 @layer components {
   .amn-btn { @apply inline-flex items-center justify-center rounded-lg px-4 py-2 font-semibold transition; }
@@ -36,14 +37,19 @@ body { @apply bg-white text-slate-800 antialiased font-sans; }
 @utility container { margin-inline: auto; width: 100%; padding-inline: 1rem; }
 @media (min-width: 1024px) { .container { padding-inline: 2rem; } }
 
+
 .hero-swiper .swiper-slide { opacity: 0; visibility: hidden; }
 .hero-swiper .swiper-slide.swiper-slide-active { opacity: 1; visibility: visible; }
 .hero-swiper .swiper-pagination { position: static; margin-top: 1.25rem; }
 .hero-swiper .swiper-pagination-bullet { width: 8px; height: 8px; background: #94a3b8; opacity: .6; }
 .hero-swiper .swiper-pagination-bullet-active { background: var(--color-amn-primary); transform: scale(1.2); opacity: 1; }
 
+
 .brand-swiper .swiper-slide { height: 72px; display: flex; align-items: center; justify-content: center; }
-.cursor-trail { position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; display: block; }
+
+
+.cursor-trail { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; display: block; }
+
 
 .sc-btn{
   position:absolute; top:50%; transform:translateY(-50%);
@@ -57,3 +63,15 @@ body { @apply bg-white text-slate-800 antialiased font-sans; }
 .sc-prev{ left:-8px; }
 .sc-next{ right:-8px; }
 
+
+.marquee{ --gap:2.5rem; position:relative; overflow:hidden; direction: rtl }
+.marquee__inner{ display:flex; align-items:center; gap:var(--gap); width:max-content; will-change:transform; animation:marquee 28s linear infinite }
+.marquee:hover .marquee__inner{ animation-play-state:paused }
+@keyframes marquee { to { transform: translateX(-50%); } }
+.marquee::before,.marquee::after{ content:""; position:absolute; top:0; bottom:0; width:72px; pointer-events:none; z-index:1 }
+.marquee::before{ left:0;  background:linear-gradient(to right,#fff,transparent) }
+.marquee::after { right:0; background:linear-gradient(to left,#fff,transparent) }
+
+
+.common-shadow-one{ box-shadow: var(--shadow-amn-lg); }
+.shadow-amn-lg{ box-shadow: var(--shadow-amn-lg); }

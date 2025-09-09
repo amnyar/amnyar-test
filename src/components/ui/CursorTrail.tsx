@@ -5,60 +5,95 @@ export default function CursorTrail() {
   const ref = useRef<HTMLCanvasElement>(null)
 
   useEffect(() => {
-    const canvas = ref.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')!
-    let dpr = window.devicePixelRatio || 1
-    let w = 0, h = 0
-    const particles: {x:number;y:number;vx:number;vy:number;r:number;a:number}[] = []
-    let anim = 0
-    const allow = !window.matchMedia('(prefers-reduced-motion: reduce)').matches && window.innerWidth >= 768
+    const el = ref.current
+    if (!el) return
+    const ctx = el.getContext('2d')!
+    let dpr = Math.max(1, window.devicePixelRatio || 1)
+    let W = 0, H = 0
+
+    let x = -100, y = -100
+    let f1x = x, f1y = y
+    let f2x = x, f2y = y
+    let raf = 0
+
+    const allow =
+      !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
+      window.innerWidth >= 768
 
     const resize = () => {
-      const s = getComputedStyle(canvas)
-      const bw = window.innerWidth
-      const bh = window.innerHeight
-      canvas.style.width = bw + 'px'
-      canvas.style.height = bh + 'px'
-      w = bw; h = bh
-      canvas.width = Math.floor(w * dpr)
-      canvas.height = Math.floor(h * dpr)
+      W = el.clientWidth
+      H = el.clientHeight
+      el.width = Math.floor(W * dpr)
+      el.height = Math.floor(H * dpr)
       ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
     }
-    const add = (x:number, y:number) => {
-      for (let i=0;i<4;i++){
-        particles.push({ x, y, vx:(Math.random()-0.5)*0.8, vy:(Math.random()-0.5)*0.8, r:3+Math.random()*4, a:1 })
-      }
-    }
+
+    const lerp = (a: number, b: number, t: number) => a + (b - a) * t
+
     const step = () => {
-      ctx.clearRect(0,0,w,h)
-      ctx.globalCompositeOperation = 'lighter'
-      for (let i=particles.length-1;i>=0;i--){
-        const p = particles[i]
-        p.x += p.vx; p.y += p.vy; p.a -= 0.015
-        if (p.a <= 0) { particles.splice(i,1); continue }
-        ctx.globalAlpha = p.a
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, p.r, 0, Math.PI*2)
-        ctx.fillStyle = '#1e40af'
-        ctx.fill()
+      ctx.clearRect(0, 0, W, H)
+
+      f1x = lerp(f1x, x, 0.18)
+      f1y = lerp(f1y, y, 0.18)
+      f2x = lerp(f2x, x, 0.10)
+      f2y = lerp(f2y, y, 0.10)
+
+      const pushAway = (fx: number, fy: number, min: number) => {
+        const dx = x - fx
+        const dy = y - fy
+        const dist = Math.hypot(dx, dy) || 1
+        if (dist < min) {
+          const ux = dx / dist
+          const uy = dy / dist
+          fx = x - ux * min
+          fy = y - uy * min
+        }
+        return [fx, fy] as const
       }
+
+      ;[f1x, f1y] = pushAway(f1x, f1y, 14)
+      ;[f2x, f2y] = pushAway(f2x, f2y, 28)
+
+      ctx.lineWidth = 2
+      ctx.strokeStyle = '#1e40af'
+
+      ctx.globalAlpha = 0.9
+      ctx.beginPath()
+      ctx.arc(f1x, f1y, 12, 0, Math.PI * 2)
+      ctx.stroke()
+
+      ctx.globalAlpha = 0.35
+      ctx.beginPath()
+      ctx.arc(f2x, f2y, 24, 0, Math.PI * 2)
+      ctx.stroke()
+
       ctx.globalAlpha = 1
-      anim = requestAnimationFrame(step)
+      ctx.fillStyle = '#1e40af'
+      ctx.beginPath()
+      ctx.arc(x, y, 3, 0, Math.PI * 2)
+      ctx.fill()
+
+      raf = requestAnimationFrame(step)
     }
-    const onMove = (e: MouseEvent) => add(e.clientX, e.clientY)
+
+    const onMove = (e: MouseEvent) => { x = e.clientX; y = e.clientY }
+    const onLeave = () => { x = -100; y = -100 }
 
     resize()
     window.addEventListener('resize', resize)
     if (allow) {
       window.addEventListener('mousemove', onMove)
-      anim = requestAnimationFrame(step)
+      window.addEventListener('mouseleave', onLeave)
+      raf = requestAnimationFrame(step)
+    } else {
+      el.style.display = 'none'
     }
 
     return () => {
       window.removeEventListener('resize', resize)
       window.removeEventListener('mousemove', onMove)
-      cancelAnimationFrame(anim)
+      window.removeEventListener('mouseleave', onLeave)
+      cancelAnimationFrame(raf)
     }
   }, [])
 

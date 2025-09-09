@@ -11,7 +11,7 @@ export default function CursorTrail() {
     let dpr = Math.max(1, window.devicePixelRatio || 1)
     let W = 0, H = 0
 
-    let x = -100, y = -100
+    let x = -200, y = -200
     let f1x = x, f1y = y
     let f2x = x, f2y = y
     let raf = 0
@@ -33,26 +33,25 @@ export default function CursorTrail() {
     const step = () => {
       ctx.clearRect(0, 0, W, H)
 
-      f1x = lerp(f1x, x, 0.18)
-      f1y = lerp(f1y, y, 0.18)
-      f2x = lerp(f2x, x, 0.10)
-      f2y = lerp(f2y, y, 0.10)
+      f1x = lerp(f1x, x, 0.12)
+      f1y = lerp(f1y, y, 0.12)
+      f2x = lerp(f2x, x, 0.06)
+      f2y = lerp(f2y, y, 0.06)
 
-      const pushAway = (fx: number, fy: number, min: number) => {
+      const push = (fx: number, fy: number, min: number) => {
         const dx = x - fx
         const dy = y - fy
-        const dist = Math.hypot(dx, dy) || 1
-        if (dist < min) {
-          const ux = dx / dist
-          const uy = dy / dist
+        const d = Math.hypot(dx, dy) || 1
+        if (d < min) {
+          const ux = dx / d, uy = dy / d
           fx = x - ux * min
           fy = y - uy * min
         }
         return [fx, fy] as const
       }
 
-      ;[f1x, f1y] = pushAway(f1x, f1y, 14)
-      ;[f2x, f2y] = pushAway(f2x, f2y, 28)
+      ;[f1x, f1y] = push(f1x, f1y, 24)
+      ;[f2x, f2y] = push(f2x, f2y, 48)
 
       ctx.lineWidth = 2
       ctx.strokeStyle = '#1e40af'
@@ -77,7 +76,7 @@ export default function CursorTrail() {
     }
 
     const onMove = (e: MouseEvent) => { x = e.clientX; y = e.clientY }
-    const onLeave = () => { x = -100; y = -100 }
+    const onLeave = () => { x = -200; y = -200 }
 
     resize()
     window.addEventListener('resize', resize)

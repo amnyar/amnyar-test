@@ -75,3 +75,27 @@ body { @apply bg-white text-slate-800 antialiased font-sans; }
 
 .common-shadow-one{ box-shadow: var(--shadow-amn-lg); }
 .shadow-amn-lg{ box-shadow: var(--shadow-amn-lg); }
+
+
+
+.brands-grid { width: 100%; }
+.brand-swiper .swiper-wrapper { align-items: center; }
+.brand-swiper .swiper-slide { height: 114px; }
+@media (min-width: 1024px){ .brand-swiper .swiper-slide { height: 114px; } }
+
+
+.ticker { position: relative; overflow: hidden; padding-block: .65rem; }
+.ticker__track { display: flex; gap: 2.5rem; white-space: nowrap; width: max-content; animation: ticker-x 36s linear infinite; }
+.ticker:hover .ticker__track { animation-play-state: paused; }
+.ticker__fade { position: absolute; top: 0; bottom: 0; width: 72px; pointer-events: none; }
+.ticker__fade--l { right: 0; background: linear-gradient(to left, #fff, transparent); }
+.ticker__fade--r { left: 0; background: linear-gradient(to right, #fff, transparent); }
+@keyframes ticker-x { to { transform: translateX(-50%); } }
+
+
+.scrolltop { position: fixed; left: 1rem; bottom: 1rem; width: 48px; height: 48px; border-radius: 9999px; background: #fff; box-shadow: 0 10px 25px -8px rgba(2,6,23,.2); display: grid; place-items: center; opacity: 0; visibility: hidden; transition: .25s; }
+.scrolltop.visible { opacity: 1; visibility: visible; }
+.scrolltop .arrow { position: absolute; font-size: 18px; color: #f59e0b; }
+
+
+.cursor-trail { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; display: block; }

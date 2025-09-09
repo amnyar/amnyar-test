@@ -3,8 +3,10 @@ import type { Metadata, Viewport } from 'next'
 import localFont from 'next/font/local'
 import Script from 'next/script'
 import Header from '@/components/layout/Header'
+import TopTicker from '@/components/layout/TopTicker'
 import Footer from '@/components/layout/Footer'
 import CursorTrail from '@/components/ui/CursorTrail'
+import ScrollTop from '@/components/ui/ScrollTop'
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://www.amnyar.com'),
@@ -48,31 +50,21 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="fa" dir="rtl" className={amnyarFont.variable}>
       <body className="font-sans">
-        <CursorTrail />
         <Header />
+        <TopTicker />
         {children}
         <Footer />
-
+        <CursorTrail />
+        <ScrollTop />
         <Script id="ld-org" type="application/ld+json" strategy="afterInteractive">{JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'Organization',
           name: 'امن‌یار',
           url: 'https://www.amnyar.com',
           logo: 'https://www.amnyar.com/assets/images/logo/logo.png',
-          sameAs: [
-            'https://www.instagram.com/amnyar',
-            'https://www.linkedin.com/company/amnyar',
-            'https://twitter.com/amnyar'
-          ],
-          contactPoint: [{
-            '@type': 'ContactPoint',
-            telephone: '+983134617093',
-            contactType: 'customer support',
-            areaServed: 'IR',
-            availableLanguage: ['fa']
-          }]
+          sameAs: ['https://www.instagram.com','https://www.linkedin.com','https://twitter.com'],
+          contactPoint: [{ '@type': 'ContactPoint', telephone: '+983134617093', contactType: 'customer service', areaServed: 'IR', availableLanguage: ['fa','en'] }]
         })}</Script>
-
         <Script id="ld-website" type="application/ld+json" strategy="afterInteractive">{JSON.stringify({
           '@context': 'https://schema.org',
           '@type': 'WebSite',
@@ -80,8 +72,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           url: 'https://www.amnyar.com',
           potentialAction: {
             '@type': 'SearchAction',
-            target: 'https://www.amnyar.com/search?q={search_term_string}',
-            'query-input': 'required name=search_term_string'
+            target: 'https://www.amnyar.com/search?q={query}',
+            'query-input': 'required name=query'
           }
         })}</Script>
       </body>

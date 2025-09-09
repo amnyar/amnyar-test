@@ -1,100 +1,50 @@
 'use client'
 import { useEffect, useRef } from 'react'
 
-export default function CursorTrail() {
+export default function CursorTrail(){
   const ref = useRef<HTMLCanvasElement>(null)
 
-  useEffect(() => {
-    const el = ref.current
-    if (!el) return
-    const ctx = el.getContext('2d')!
-    let dpr = Math.max(1, window.devicePixelRatio || 1)
-    let W = 0, H = 0
+  useEffect(()=>{
+    const c = ref.current
+    if(!c) return
+    const ctx = c.getContext('2d')!
+    let dpr = window.devicePixelRatio || 1
+    let w=0,h=0
+    const parts: {x:number;y:number;vx:number;vy:number;r:number;a:number}[] = []
+    let anim=0, mx=0, my=0, moved=false
+    const allow = !window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
-    let x = -200, y = -200
-    let f1x = x, f1y = y
-    let f2x = x, f2y = y
-    let raf = 0
-
-    const allow =
-      !window.matchMedia('(prefers-reduced-motion: reduce)').matches &&
-      window.innerWidth >= 768
-
-    const resize = () => {
-      W = el.clientWidth
-      H = el.clientHeight
-      el.width = Math.floor(W * dpr)
-      el.height = Math.floor(H * dpr)
-      ctx.setTransform(dpr, 0, 0, dpr, 0, 0)
-    }
-
-    const lerp = (a: number, b: number, t: number) => a + (b - a) * t
-
-    const step = () => {
-      ctx.clearRect(0, 0, W, H)
-
-      f1x = lerp(f1x, x, 0.12)
-      f1y = lerp(f1y, y, 0.12)
-      f2x = lerp(f2x, x, 0.06)
-      f2y = lerp(f2y, y, 0.06)
-
-      const push = (fx: number, fy: number, min: number) => {
-        const dx = x - fx
-        const dy = y - fy
-        const d = Math.hypot(dx, dy) || 1
-        if (d < min) {
-          const ux = dx / d, uy = dy / d
-          fx = x - ux * min
-          fy = y - uy * min
-        }
-        return [fx, fy] as const
+    const resize=()=>{ w=c.clientWidth; h=c.clientHeight; c.width=Math.floor(w*dpr); c.height=Math.floor(h*dpr); ctx.setTransform(dpr,0,0,dpr,0,0) }
+    const emit=(x:number,y:number,n=6)=>{
+      for(let i=0;i<n;i++){
+        const a=Math.random()*Math.PI*2
+        const s=1.2+Math.random()*1.8
+        parts.push({x,y,vx:Math.cos(a)*s,vy:Math.sin(a)*s,r:2.5+Math.random()*5,a:1})
       }
-
-      ;[f1x, f1y] = push(f1x, f1y, 24)
-      ;[f2x, f2y] = push(f2x, f2y, 48)
-
-      ctx.lineWidth = 2
-      ctx.strokeStyle = '#1e40af'
-
-      ctx.globalAlpha = 0.9
-      ctx.beginPath()
-      ctx.arc(f1x, f1y, 12, 0, Math.PI * 2)
-      ctx.stroke()
-
-      ctx.globalAlpha = 0.35
-      ctx.beginPath()
-      ctx.arc(f2x, f2y, 24, 0, Math.PI * 2)
-      ctx.stroke()
-
-      ctx.globalAlpha = 1
-      ctx.fillStyle = '#1e40af'
-      ctx.beginPath()
-      ctx.arc(x, y, 3, 0, Math.PI * 2)
-      ctx.fill()
-
-      raf = requestAnimationFrame(step)
     }
-
-    const onMove = (e: MouseEvent) => { x = e.clientX; y = e.clientY }
-    const onLeave = () => { x = -200; y = -200 }
+    const step=()=>{
+      if(!moved) emit(mx,my,2)
+      moved=false
+      ctx.clearRect(0,0,w,h)
+      for(let i=parts.length-1;i>=0;i--){
+        const p=parts[i]
+        p.x+=p.vx; p.y+=p.vy
+        p.vx*=0.98; p.vy*=0.98
+        p.a-=0.012
+        if(p.a<=0){ parts.splice(i,1); continue }
+        ctx.globalAlpha=p.a
+        ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fillStyle='#1e40af'; ctx.fill()
+      }
+      ctx.globalAlpha=1
+      anim=requestAnimationFrame(step)
+    }
+    const onMove=(e:MouseEvent)=>{ mx=e.clientX; my=e.clientY; moved=true; emit(mx,my) }
 
     resize()
-    window.addEventListener('resize', resize)
-    if (allow) {
-      window.addEventListener('mousemove', onMove)
-      window.addEventListener('mouseleave', onLeave)
-      raf = requestAnimationFrame(step)
-    } else {
-      el.style.display = 'none'
-    }
-
-    return () => {
-      window.removeEventListener('resize', resize)
-      window.removeEventListener('mousemove', onMove)
-      window.removeEventListener('mouseleave', onLeave)
-      cancelAnimationFrame(raf)
-    }
-  }, [])
+    window.addEventListener('resize',resize)
+    if(allow){ window.addEventListener('mousemove',onMove); anim=requestAnimationFrame(step) }
+    return ()=>{ window.removeEventListener('resize',resize); window.removeEventListener('mousemove',onMove); cancelAnimationFrame(anim) }
+  },[])
 
   return <canvas ref={ref} className="cursor-trail" />
 }

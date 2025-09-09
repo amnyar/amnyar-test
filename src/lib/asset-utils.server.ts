@@ -1,9 +1,10 @@
-import fs from 'fs'
-import path from 'path'
+import 'server-only'
+import fs from 'node:fs'
+import path from 'node:path'
 
 const exts = new Set(['.png', '.jpg', '.jpeg', '.webp', '.svg', '.gif'])
-
 const pub = (...p: string[]) => path.join(process.cwd(), 'public', ...p)
+const toPosix = (s: string) => s.replace(/\\/g, '/')
 
 export const dirExists = (rel: string) => {
   const abs = pub(rel)
@@ -14,8 +15,6 @@ export const firstExistingDir = (candidates: string[]) => {
   for (const d of candidates) if (dirExists(d)) return d
   return null
 }
-
-const toPosix = (s: string) => s.split('\\').join('/')
 
 export const listImages = (relDir: string) => {
   const abs = pub(relDir)
@@ -30,7 +29,9 @@ export const listImages = (relDir: string) => {
 export const pickImage = (relDir: string, keyword?: RegExp) => {
   const abs = pub(relDir)
   if (!fs.existsSync(abs)) return null
-  const files = fs.readdirSync(abs).filter(f => exts.has(path.extname(f).toLowerCase())).sort()
+  const files = fs.readdirSync(abs)
+    .filter(f => exts.has(path.extname(f).toLowerCase()))
+    .sort()
   if (!files.length) return null
   if (keyword) {
     const hit = files.find(f => keyword.test(f))

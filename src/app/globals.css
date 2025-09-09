@@ -84,6 +84,14 @@ body { @apply bg-white text-slate-800 antialiased font-sans; }
 @media (min-width: 1024px){ .brand-swiper .swiper-slide { height: 114px; } }
 
 
+.brand-strip{background:#fff}
+.brand-marquee{overflow:hidden}
+.brand-track{display:flex;gap:0;width:max-content;animation:brand-move 35s linear infinite}
+.brand-track:hover{animation-play-state:paused}
+.brand-cell{width:16rem;height:114px;display:flex;align-items:center;justify-content:center;border-inline-end:1px dashed #e5e7eb;border-bottom:1px dashed #e5e7eb}
+@keyframes brand-move{to{transform:translateX(-50%)}}
+
+
 .ticker { position: relative; overflow: hidden; padding-block: .65rem; }
 .ticker__track { display: flex; gap: 2.5rem; white-space: nowrap; width: max-content; animation: ticker-x 36s linear infinite; }
 .ticker:hover .ticker__track { animation-play-state: paused; }

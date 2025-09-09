@@ -1,4 +1,4 @@
-import { listImages, firstExistingDir } from '@/lib/asset-utils'
+import { listImages, firstExistingDir } from '@/lib/asset-utils.server'
 import BrandCarouselClient from './BrandCarouselClient'
 
 export default function BrandCarousel() {

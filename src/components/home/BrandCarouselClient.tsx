@@ -1,37 +1,55 @@
 'use client'
+import { useEffect, useRef } from 'react'
 import { Swiper, SwiperSlide } from 'swiper/react'
-import { Autoplay, FreeMode } from 'swiper/modules'
 import 'swiper/css'
-import 'swiper/css/free-mode'
-import SmartImage from '@/components/ui/SmartImage'
+import Image from 'next/image'
+import type { Swiper as SwiperType } from 'swiper'
 
 export default function BrandCarouselClient({ items }: { items: string[] }) {
-  const logos = items.length ? items : [
-    '/assets/images/thumbs/brand-img1.png',
-    '/assets/images/thumbs/brand-img2.png',
-    '/assets/images/thumbs/brand-img3.png',
-    '/assets/images/thumbs/brand-img4.png',
-    '/assets/images/thumbs/brand-img5.png',
-    '/assets/images/thumbs/brand-img6.png',
-    '/assets/images/thumbs/brand-img7.png'
-  ]
+  const logos = items?.length
+    ? items
+    : [
+        '/assets/images/thumbs/brand-img1.png',
+        '/assets/images/thumbs/brand-img2.png',
+        '/assets/images/thumbs/brand-img3.png',
+        '/assets/images/thumbs/brand-img4.png',
+        '/assets/images/thumbs/brand-img5.png',
+        '/assets/images/thumbs/brand-img6.png',
+        '/assets/images/thumbs/brand-img7.png',
+      ]
+
+  const swiperRef = useRef<SwiperType | null>(null)
+  useEffect(() => {
+    const id = setInterval(() => {
+      swiperRef.current?.slideNext(420)
+    }, 2000)
+    return () => clearInterval(id)
+  }, [])
+
   return (
     <section className="bg-white border-t border-neutral-200 py-2">
-      <div className="container">
+      <div className="container px-0">
         <Swiper
           className="brand-swiper"
-          modules={[Autoplay, FreeMode]}
-          autoplay={{ delay: 0, disableOnInteraction: false, pauseOnMouseEnter: true }}
-          freeMode
+          onSwiper={(s) => (swiperRef.current = s)}
+          dir="rtl"
           loop
-          speed={3000}
-          slidesPerView={2}
-          breakpoints={{ 640: { slidesPerView: 3 }, 768: { slidesPerView: 4 }, 1024: { slidesPerView: 6 }, 1280: { slidesPerView: 7 } }}
+          centeredSlides={false}
+          slidesPerGroup={1}
+          spaceBetween={0}
+          allowTouchMove
+          breakpoints={{
+            0:    { slidesPerView: 2 },
+            640:  { slidesPerView: 2 },
+            1024: { slidesPerView: 2 },
+            1440: { slidesPerView: 2 },
+            1920: { slidesPerView: 2 },
+          }}
         >
           {logos.concat(logos).map((src, i) => (
             <SwiperSlide key={i}>
-              <div className="h-16 w-36 flex items-center justify-center">
-                <SmartImage src={src} alt="brand" width={120} height={36} className="object-contain" />
+              <div className="brand-cell">
+                <Image alt="" src={src} width={160} height={48} className="object-contain" />
               </div>
             </SwiperSlide>
           ))}

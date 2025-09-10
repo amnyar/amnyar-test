@@ -4,10 +4,10 @@ import { useState } from 'react'
 import SmartImage from '@/components/ui/SmartImage'
 
 const items = [
-  { t: 'فناوری برش', d: 'زیرساخت مدرن و امن.', img: '/assets/images/thumbs/faq-thumb1.png' },
-  { t: 'راه حل متناسب', d: 'سفارشی‌سازی بر اساس نیاز واقعی شما.', img: '/assets/images/thumbs/faq-thumb2.png' },
-  { t: 'کشف و تجزیه و تحلیل', d: 'تصمیم‌های داده‌محور و پایش مداوم.', img: '/assets/images/thumbs/faq-thumb3.png' },
-  { t: 'استقرار و پشتیبانی', d: 'پشتیبانی واقعی و SLA.', img: '/assets/images/thumbs/faq-thumb4.png' },
+  { t: 'فناوری برش', d: 'زیرساخت مدرن و امن.', img: '/assets/images/thumbs/faq-thumb-1.png' },
+  { t: 'راه حل متناسب', d: 'سفارشی‌سازی بر اساس نیاز واقعی شما.', img: '/assets/images/thumbs/faq-thumb-2.png' },
+  { t: 'کشف و تجزیه و تحلیل', d: 'تصمیم‌های داده‌محور و پایش مداوم.', img: '/assets/images/thumbs/faq-thumb-3.png' },
+  { t: 'استقرار و پشتیبانی', d: 'پشتیبانی واقعی و SLA.', img: '/assets/images/thumbs/faq-thumb-4.png' },
 ]
 
 export default function TechSolution() {

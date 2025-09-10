@@ -45,7 +45,7 @@ body { @apply bg-white text-slate-800 antialiased font-sans; }
 .hero-swiper .swiper-pagination-bullet-active { background: var(--color-amn-primary); transform: scale(1.2); opacity: 1; }
 
 
-.brand-swiper .swiper-slide { height: 72px; display: flex; align-items: center; justify-content: center; }
+
 
 
 .cursor-trail { position: fixed; inset: 0; width: 100vw; height: 100vh; pointer-events: none; z-index: 9999; display: block; }
@@ -79,9 +79,9 @@ body { @apply bg-white text-slate-800 antialiased font-sans; }
 
 
 .brands-grid { width: 100%; }
-.brand-swiper .swiper-wrapper { align-items: center; }
-.brand-swiper .swiper-slide { height: 114px; }
-@media (min-width: 1024px){ .brand-swiper .swiper-slide { height: 114px; } }
+.brand-swiper-logos .swiper-wrapper { align-items: center; }
+.brand-swiper-logos .swiper-slide { height: 114px; }
+@media (min-width: 1024px){ .brand-swiper-logos .swiper-slide { height: 114px; } }
 
 
 .brand-strip { background:#fff }
@@ -196,9 +196,9 @@ h1.tw-leading-104 { line-height: 1.4; font-size: 48px; }
 
 
 
-.brand-swiper { width: 100%; }
-.brand-swiper .swiper-wrapper { align-items: center; }
-.brand-swiper .swiper-slide { width: 232px !important; } /* همسان با SLIDE_W */
+.brand-swiper-logos { width: 100%; }
+.brand-swiper-logos .swiper-wrapper { align-items: center; }
+.brand-swiper-logos .swiper-slide { height: 114px; width: auto !important; }
 
 .brand-cell{
   display:flex; align-items:center; justify-content:center;

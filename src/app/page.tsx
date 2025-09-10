@@ -1,5 +1,5 @@
 import HeroSlider from '@/components/home/HeroSlider'
-import ClientsStrip from '@/components/home/ClientsStrip'
+import BrandCarousel from '@/components/home/BrandCarousel'
 import AboutIntro from '@/components/home/AboutIntro'
 import TechSolution from '@/components/home/TechSolution'
 import ShowcaseSlider from '@/components/home/ShowcaseSlider'
@@ -15,7 +15,7 @@ export default function HomePage() {
   return (
     <main>
       <HeroSlider />
-      <ClientsStrip />
+      <BrandCarousel />
       <AboutIntro />
       <TechSolution />
       <ShowcaseSlider />

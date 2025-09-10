@@ -16,14 +16,19 @@ export const firstExistingDir = (candidates: string[]) => {
   return null
 }
 
-export const listImages = (relDir: string) => {
+export const listImagesFromBrands = (): string[] => {
+  const relDir = 'assets/images/brands'
   const abs = pub(relDir)
   if (!fs.existsSync(abs)) return []
-  return fs
-    .readdirSync(abs)
-    .filter(f => exts.has(path.extname(f).toLowerCase()))
-    .sort()
-    .map(f => toPosix('/' + relDir + '/' + f))
+  try {
+    const files = fs.readdirSync(abs, { withFileTypes: true })
+      .filter(e => e.isFile() && exts.has(path.extname(e.name).toLowerCase()))
+      .map(e => toPosix('/' + relDir + '/' + e.name))
+    files.sort((a, b) => a.localeCompare(b, 'en'))
+    return files
+  } catch {
+    return []
+  }
 }
 
 export const pickImage = (relDir: string, keyword?: RegExp) => {

@@ -8,7 +8,7 @@ export default function HeroSlider() {
   try {
     images = fs
       .readdirSync(thumbsDir)
-      .filter(f => f.startsWith('banner-img'))
+      .filter(f => /^banner-img.*\.(png|jpe?g|webp|avif)$/i.test(f))
       .sort()
       .map(f => `/assets/images/thumbs/${f}`)
   } catch {}

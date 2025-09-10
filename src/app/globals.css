@@ -114,3 +114,80 @@ body { @apply bg-white text-slate-800 antialiased font-sans; }
 .amn-btn:hover::after { transform: translateX(0) }
 .amn-btn:active { transform: translateY(1px) }
 
+
+.banner { background-color: #f7f9ff; }
+.tw-py-80-px { padding-top: 80px; padding-bottom: 80px; }
+.section-bg-three { background-image: url('/assets/images/shapes/section-bg3.png'); background-position: center bottom; background-repeat: no-repeat; background-size: cover; }
+.max-w-1400-px { max-width: 1400px; }
+h1.tw-leading-104 { line-height: 1.4; font-size: 48px; }
+.fw-semibold { font-weight: 600 !important; }
+.max-w-500-px { max-width: 500px; }
+.tw-mt-11 { margin-top: 2.75rem; }
+.tw-gap-42-px { gap: 42px; }
+.btn-main { background-color: #0d6efd; color: #fff; border-radius: 9999px; padding: 1.25rem 3.5rem; font-weight: 600; }
+.btn-main:hover { background-color: #0b1220; }
+.tw-ps-98-px { padding-right: 98px; }
+.common-shadow-two { box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.07); }
+.bg-green { background-color: #28a745; }
+.tw-py-05 { padding-top: 0.125rem; padding-bottom: 0.125rem; }
+.bg-main-600 { background-color: #0d6efd; }
+.clip-path-one { clip-path: polygon(25% 0, 100% 0, 100% 100%, 0 100%); }
+.bg-white-7 { background-color: rgba(255, 255, 255, 0.7); }
+.bg-blur-20 { backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); }
+.common-tab .nav-link { color: #6c757d; font-weight: 500; background: transparent; border: 0; }
+.common-tab .nav-link.active { color: #0d6efd; position: relative; }
+.common-tab .nav-link.active::after { content: ''; position: absolute; bottom: -5px; left: 0; width: 100%; height: 2px; background-color: #0d6efd; }
+.animate__wobble__two { animation: wobble_two 8s linear infinite; }
+.floating-element-1 { animation: move-2 5s linear infinite; }
+.floating-element-2 { animation: move-3 5s linear infinite 1s; }
+.floating-element-3 { animation: move-1 5s linear infinite; }
+@keyframes wobble_two { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+@keyframes move-1 { 0% { transform: translateY(0); } 50% { transform: translateY(-15px); } 100% { transform: translateY(0); } }
+@keyframes move-2 { 0% { transform: translateX(0); } 50% { transform: translateX(15px); } 100% { transform: translateX(0); } }
+@keyframes move-3 { 0% { transform: translateY(0); } 50% { transform: translateY(15px); } 100% { transform: translateY(0); } }
+
+@media (max-width: 991px) {
+  .tw-ps-98-px { padding-right: 0; }
+}
+
+@media (max-width: 767px) {
+  .banner { padding-top: 100px; padding-bottom: 60px; }
+  .col-lg-6 > div { text-align: center; }
+  h1.tw-leading-104 { font-size: 32px; }
+  .tw-mt-11 { justify-content: center; }
+  .hero-thumb-container { padding-bottom: 0; margin-top: 50px; }
+  .floating-element-1, .floating-element-2, .floating-element-3 { display: none; }
+}
+
+.avatar { transition: transform .18s ease; }
+.avatar:hover { transform: scale(1.12); }
+
+.revenue-card { background: rgba(255,255,255,.7); -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px); padding: 1.25rem 1.75rem; border-radius: 1.5rem; box-shadow: 0 10px 30px rgba(0,0,0,.07); }
+
+@media (max-width: 991px) {
+  .tw-ps-98-px { padding-right: 0; }
+}
+
+.section-bg-three{
+  background: #f4f6ff;
+  background-image:
+    linear-gradient(rgba(13,110,253,.05) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(13,110,253,.05) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px;
+  background-position: center bottom;
+}
+
+.avatar{transition:transform .18s ease}
+.avatar:hover{transform:scale(1.12)}
+
+.trust-badge{background:#fff;padding:.875rem 1rem;border-radius:1.25rem;box-shadow:0 10px 30px rgba(0,0,0,.07);display:grid;gap:.5rem;width:max-content}
+
+.exp-badge{background:#0d6efd;padding:2.25rem 2.5rem;border-radius:1.25rem;clip-path:polygon(18% 0,100% 0,100% 100%,0 100%)}
+
+.revenue-card{background:rgba(255,255,255,.7);-webkit-backdrop-filter:blur(20px);backdrop-filter:blur(20px);padding:1.25rem 1.75rem;border-radius:1.5rem;box-shadow:0 10px 30px rgba(0,0,0,.07)}
+
+.rev-splash{filter:drop-shadow(0 6px 18px rgba(13,110,253,.15))}
+
+
+
+@media (max-width:991px){ .tw-ps-98-px{ padding-right:0 } }

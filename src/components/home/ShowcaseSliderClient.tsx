@@ -26,11 +26,8 @@ export default function ShowcaseSliderClient({ items }: { items: { src: string; 
           <Swiper
             modules={[Autoplay, Navigation]}
             navigation={{ prevEl: '.sc-prev', nextEl: '.sc-next' }}
-            autoplay={{ delay: 2000, disableOnInteraction: false }}
-            speed={380}
+            autoplay={{ delay: 3500, disableOnInteraction: false }}
             loop
-            loopAdditionalSlides={4}
-            slidesPerGroup={1}
             spaceBetween={24}
             slidesPerView={1.1}
             breakpoints={{ 768: { slidesPerView: 2.1 }, 1024: { slidesPerView: 3.1 } }}
@@ -38,8 +35,8 @@ export default function ShowcaseSliderClient({ items }: { items: { src: string; 
             {data.map((it, i) => (
               <SwiperSlide key={i}>
                 <div className="group">
-                  <div className="relative aspect-[16/9] rounded-2xl overflow-hidden">
-                    <SmartImage src={it.src} alt="" fill className="object-cover transition duration-300 group-hover:scale-[1.02]" sizes="(max-width: 768px) 90vw, 33vw" />
+                  <div className="relative h-56 md:h-72 rounded-2xl overflow-hidden">
+                    <SmartImage src={it.src} alt="" fill className="object-cover group-hover:scale-105 transition duration-300" sizes="(max-width: 768px) 90vw, 33vw" />
                   </div>
                   <div className="mt-3 text-white">
                     <span className="text-sm opacity-80">عملکرد عالی</span>

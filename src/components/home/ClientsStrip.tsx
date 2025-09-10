@@ -12,15 +12,15 @@ export default function ClientsStrip() {
     '/assets/images/thumbs/brand-img5.png',
     '/assets/images/thumbs/brand-img6.png',
     '/assets/images/thumbs/brand-img7.png',
-    '/assets/images/thumbs/brand-img3.png',
+    '/assets/images/thumbs/brand-img3.png'
   ]
-  const items = logos.length ? logos : fallback
+  const items = (logos.length ? logos : fallback).slice(0, 12)
 
   return (
     <section className="brand-strip">
       <div className="brand-marquee">
-        <div className="brand-track" dir="ltr">
-          {items.concat(items).concat(items).map((src, i) => (
+        <div className="brand-track">
+          {items.concat(items).map((src, i) => (
             <div key={i} className="brand-cell">
               <SmartImage src={src} alt="brand" width={140} height={40} className="object-contain" />
             </div>

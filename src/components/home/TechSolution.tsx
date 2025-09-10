@@ -15,9 +15,9 @@ export default function TechSolution() {
   return (
     <section className="py-16 relative overflow-hidden">
       <div className="container">
-        <div className="grid md:grid-cols-2 gap-12 items-start">
+        <div className="grid md:grid-cols-2 gap-12 items-center">
           <div>
-            <span className="inline-flex items-center rounded-full bg-indigo-50 text-amn-primary px-3 py-1 text-xs font-bold">راه حل فنی</span>
+            <span className="inline-flex items-center rounded-full bg-white text-amn-primary px-3 py-1 text-xs font-bold">راه حل فنی</span>
             <h3 className="mt-4 text-3xl md:text-4xl font-extrabold">پلتفرم کامل برای توانمندسازی شما</h3>
             <p className="mt-3 text-slate-600">ترکیبی از معماری بهینه، امنیت و تجربه کاربری تمیز.</p>
 
@@ -38,9 +38,10 @@ export default function TechSolution() {
             </ul>
           </div>
 
-          <div className="relative md:mt-4">
-            <div className="relative h-[420px]">
+          <div className="relative">
+            <div className="relative h-[420px] rounded-2xl overflow-hidden bg-white p-3 shadow">
               <SmartImage
+                key={items[active].img}
                 src={items[active].img}
                 alt=""
                 fill
